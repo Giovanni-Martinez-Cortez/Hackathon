@@ -2071,7 +2071,7 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 			
 			<script>
 				// Load the chatbot into the 'chatbot-container' div
-				fetch('/aichatbot/index.html')
+				fetch('./aichatbot/index.html')
 					.then(response => response.text())
 					.then(data => {
 						document.getElementById('chatbot-container').innerHTML = data;
