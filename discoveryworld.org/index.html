@@ -2067,6 +2067,7 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 					</ul>
 									</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 								<!-- Chatbot container -->
 <div id="chatbot-container"></div>
 
@@ -2269,6 +2270,8 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
     }
 </style>
 =======
+=======
+>>>>>>> parent of b671bea (prolly wotnwork)
 								</div><!-- Chatbot container -->
 								<div id="chatbot-container"></div>
 								
@@ -2305,8 +2308,19 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 								<script>
 									function toggleChatWindow() {
 										const chatWindow = document.getElementById('chatWindow');
+<<<<<<< HEAD
 										console.log("Toggling chat window display");
 										chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
+=======
+										console.log("Toggling chat window display, current display:", chatWindow.style.display);
+										
+										// Set the display to either 'flex' or 'none' based on the current state
+										if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+											chatWindow.style.display = 'flex';
+										} else {
+											chatWindow.style.display = 'none';
+										}
+>>>>>>> parent of b671bea (prolly wotnwork)
 									}
 								
 									function minimizeChat() {
@@ -2333,11 +2347,16 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 											userInput.value = '';
 								
 											// Send the user's message to the backend via a POST request
+<<<<<<< HEAD
 											fetch('http://localhost:5000/processprompt', {  // Use the correct backend URL
+=======
+											fetch('http://localhost:5000/processprompt', {
+>>>>>>> parent of b671bea (prolly wotnwork)
 												method: 'POST',
 												headers: {
 													'Content-Type': 'application/json',
 												},
+<<<<<<< HEAD
 												body: JSON.stringify({ prompt: userMessage })  // Send the user's message as a JSON object
 											})
 											.then(response => response.json())
@@ -2352,6 +2371,25 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 												chatBody.appendChild(assistantMessageElement);
 								
 												// Auto-scroll to the latest message
+=======
+												body: JSON.stringify({ prompt: userMessage })  // Send the user's message as JSON
+											})
+											.then(response => response.json())
+											.then(data => {
+												console.log("Assistant response data:", data);
+								
+												// Check if the 'text' key exists and extract the response
+												if (data.text) {
+													const assistantMessageText = data.text;
+													const assistantMessageElement = document.createElement('div');
+													assistantMessageElement.classList.add('message', 'assistant-message');
+													assistantMessageElement.textContent = assistantMessageText;
+													chatBody.appendChild(assistantMessageElement);
+												} else {
+													console.error("No text property found in the response data.");
+												}
+								
+>>>>>>> parent of b671bea (prolly wotnwork)
 												chatBody.scrollTop = chatBody.scrollHeight;
 											})
 											.catch(error => {
@@ -2360,5 +2398,9 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 										}
 									}
 								</script>
+<<<<<<< HEAD
 								
 >>>>>>> parent of 0cdad14 (mobile?)
+=======
+								
+>>>>>>> parent of b671bea (prolly wotnwork)
