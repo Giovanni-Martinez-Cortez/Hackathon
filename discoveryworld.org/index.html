@@ -2176,11 +2176,9 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
     /* Chat window styles */
     .chat-window {
         position: fixed;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%); /* Center horizontally */
-        width: 90%; /* Adjust for mobile screen size */
-        max-width: 400px; /* Max width for larger screens */
+        bottom: 70px;
+        right: 20px;
+        width: 300px;
         height: 400px;
         background-color: #fff;
         border: 1px solid #ddd;
@@ -2188,7 +2186,6 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
         display: none; /* Initially hidden */
         flex-direction: column;
         z-index: 9999; /* Ensure it's above other elements */
-        border-radius: 10px; /* Rounded corners */
     }
 
     .chat-logo {
@@ -2269,15 +2266,6 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
     .assistant-message {
         background-color: #de8cb5;
         color: white;
-    }
-
-    /* Additional media query for small screens */
-    @media (max-width: 600px) {
-        .chat-window {
-            width: 100%; /* Take full width on small screens */
-            height: 80%; /* Adjust height on small screens */
-            max-width: none; /* Remove max-width for small screens */
-        }
     }
 </style>
 =======
