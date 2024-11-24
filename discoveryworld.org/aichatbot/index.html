@@ -14,8 +14,10 @@
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 350px; /* Increased width by 50px */
-            height: 50vh; /* Half the viewport height */
+            width: 90%; /* Use a percentage for better scaling */
+            max-width: 350px; /* Limit the width on larger screens */
+            height: 50vh;
+            max-height: 400px; /* Limit height for very tall screens */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-radius: 8px;
             background-color: #ffffff;
@@ -29,7 +31,7 @@
             color: white;
             padding: 15px;
             text-align: center;
-            font-size: 20px;
+            font-size: 18px; /* Reduced size for smaller screens */
             font-weight: bold;
         }
         .chat-body {
@@ -40,7 +42,7 @@
         }
         .chat-body .message {
             margin: 12px 0;
-            font-size: 18px;
+            font-size: 16px; /* Slightly smaller font for readability on small screens */
         }
         .chat-body .user-message {
             text-align: right;
@@ -53,29 +55,49 @@
         }
         .chat-footer {
             display: flex;
-            border-top: 1px solid #ffffff;
+            border-top: 1px solid #ddd;
         }
         .chat-footer input[type="text"] {
             flex: 1;
             border: none;
-            padding: 15px;
-            font-size: 18px;
+            padding: 10px;
+            font-size: 16px; /* Adjust for smaller devices */
             background-color: #ffffff;
-            color: rgb(0, 0, 0);
+            color: #000;
         }
         .chat-footer button {
             background-color: #de8cb5;
-            color: rgb(255, 255, 255);
+            color: #fff;
             border: none;
-            padding: 12px 18px;
+            padding: 10px;
             cursor: pointer;
+            font-size: 16px; /* Ensure button text is legible */
         }
         .chat-footer button:hover {
-            background-color: #de8cb5;
+            background-color: #c076a3;
+        }
+
+        @media screen and (max-width: 480px) {
+            .chat-window {
+                bottom: 10px;
+                right: 10px;
+                width: 95%; /* Use almost full width for small screens */
+                height: 60vh; /* Increase height for smaller devices */
+            }
+            .chat-header {
+                font-size: 16px;
+                padding: 10px;
+            }
+            .chat-body {
+                padding: 10px;
+            }
+            .chat-footer input[type="text"],
+            .chat-footer button {
+                font-size: 14px;
+                padding: 8px;
+            }
         }
     </style>
-    
-    
 </head>
 <body>
     <div class="chat-window">
