@@ -3,53 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Assistant</title>
+    <title>Chatbot Example</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
         }
-        /* Floating Logo Button */
+
         .chat-logo {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 50px;
-            height: 50px;
-            background-color: #241c1c;
+            background-color: #de8cb5;
             color: white;
             border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            text-align: center;
+            line-height: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 10000;
-        }
-        .chat-logo img {
-            width: 80%;
-            height: 80%;
-        }
-
-        /* Chat Window */
-        .chat-window {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 90%;
-            max-width: 350px;
-            height: 60vh;
-            max-height: 400px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            background-color: #ffffff;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid #ddd;
             z-index: 9999;
         }
+
+        .chat-window {
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 9999;
+        }
+
         .chat-header {
             background-color: #241c1c;
             color: white;
@@ -57,97 +48,62 @@
             text-align: center;
             font-size: 16px;
             font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
+
         .chat-body {
             flex: 1;
             overflow-y: auto;
             padding: 10px;
             background-color: #c3e3f3;
         }
-        .chat-body .message {
-            margin: 10px 0;
-            font-size: 14px;
-        }
-        .chat-body .user-message {
-            text-align: right;
-            color: #241c1c;
-            font-weight: normal;
-        }
-        .chat-body .assistant-message {
-            text-align: left;
-            font-weight: bold;
-        }
+
         .chat-footer {
             display: flex;
             border-top: 1px solid #ddd;
         }
+
         .chat-footer input[type="text"] {
             flex: 1;
-            border: none;
             padding: 10px;
             font-size: 14px;
+            border: none;
             background-color: #ffffff;
-            color: #000;
         }
+
         .chat-footer button {
             background-color: #de8cb5;
-            color: #fff;
+            color: white;
             border: none;
             padding: 10px;
             cursor: pointer;
-            font-size: 14px;
         }
+
         .chat-footer button:hover {
             background-color: #c076a3;
         }
 
-        /* Minimize Button */
         .minimize-btn {
-            font-size: 20px;
-            cursor: pointer;
-            color: #fff;
-            background-color: transparent;
+            background-color: #e74c3c;
+            color: white;
             border: none;
             padding: 5px;
-        }
-
-        @media screen and (max-width: 480px) {
-            .chat-window {
-                bottom: 80px;
-                right: 5px;
-                width: 95%;
-                height: 70vh;
-                max-height: 100%;
-            }
-            .chat-header {
-                font-size: 14px;
-                padding: 8px;
-            }
-            .chat-body {
-                padding: 8px;
-            }
-            .chat-footer input[type="text"],
-            .chat-footer button {
-                font-size: 12px;
-                padding: 8px;
-            }
+            font-size: 16px;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Floating Chat Logo -->
-    <div class="chat-logo" onclick="toggleChatWindow()">
-        <img src="https://via.placeholder.com/40" alt="Chat Logo"> <!-- Replace with your logo -->
-    </div>
+    <!-- Smiley Face Button -->
+    <div class="chat-logo" onclick="toggleChatWindow()">😊</div>
 
     <!-- Chat Window -->
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
-            <span>Echo</span>
+            Chatbot
             <button class="minimize-btn" onclick="minimizeChat()">-</button>
         </div>
         <div class="chat-body" id="chatBody">
@@ -162,23 +118,18 @@
     <script>
         function toggleChatWindow() {
             const chatWindow = document.getElementById('chatWindow');
-            if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
-                chatWindow.style.display = 'flex'; // Show the chat window
-            } else {
-                chatWindow.style.display = 'none'; // Hide the chat window
-            }
+            chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
         }
 
         function minimizeChat() {
             const chatWindow = document.getElementById('chatWindow');
-            chatWindow.style.display = 'none'; // Hide the chat window when minimize button is clicked
+            chatWindow.style.display = 'none';
         }
 
         function sendMessage() {
             const chatBody = document.getElementById('chatBody');
             const userInput = document.getElementById('userInput');
             const userMessage = userInput.value.trim();
-
             if (userMessage) {
                 // Display user's message
                 const userMessageElement = document.createElement('div');
@@ -205,5 +156,6 @@
             }
         }
     </script>
+
 </body>
 </html>
