@@ -2102,8 +2102,14 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 								<script>
 									function toggleChatWindow() {
 										const chatWindow = document.getElementById('chatWindow');
-										console.log("Toggling chat window display");
-										chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
+										console.log("Toggling chat window display, current display:", chatWindow.style.display);
+										
+										// Set the display to either 'flex' or 'none' based on the current state
+										if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+											chatWindow.style.display = 'flex';
+										} else {
+											chatWindow.style.display = 'none';
+										}
 									}
 								
 									function minimizeChat() {
@@ -2130,25 +2136,28 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 											userInput.value = '';
 								
 											// Send the user's message to the backend via a POST request
-											fetch('http://localhost:5000/processprompt', {  // Use the correct backend URL
+											fetch('http://localhost:5000/processprompt', {
 												method: 'POST',
 												headers: {
 													'Content-Type': 'application/json',
 												},
-												body: JSON.stringify({ prompt: userMessage })  // Send the user's message as a JSON object
+												body: JSON.stringify({ prompt: userMessage })  // Send the user's message as JSON
 											})
 											.then(response => response.json())
 											.then(data => {
-												// Ensure the response contains the correct text
-												const assistantMessageText = data.text || "Sorry, I couldn't process your request.";
-												
-												// Display the assistant's response
-												const assistantMessageElement = document.createElement('div');
-												assistantMessageElement.classList.add('message', 'assistant-message');
-												assistantMessageElement.textContent = assistantMessageText;  // Display the actual response text
-												chatBody.appendChild(assistantMessageElement);
+												console.log("Assistant response data:", data);
 								
-												// Auto-scroll to the latest message
+												// Check if the 'text' key exists and extract the response
+												if (data.text) {
+													const assistantMessageText = data.text;
+													const assistantMessageElement = document.createElement('div');
+													assistantMessageElement.classList.add('message', 'assistant-message');
+													assistantMessageElement.textContent = assistantMessageText;
+													chatBody.appendChild(assistantMessageElement);
+												} else {
+													console.error("No text property found in the response data.");
+												}
+								
 												chatBody.scrollTop = chatBody.scrollHeight;
 											})
 											.catch(error => {
