@@ -1,59 +1,162 @@
-<!-- Smiley Face Button -->
-<div class="chat-logo" onclick="toggleChatWindow()">😊</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-<!-- Chat Window -->
-<div class="chat-window" id="chatWindow">
-    <div class="chat-header">
-        Chatbot
-        <button class="minimize-btn" onclick="minimizeChat()">-</button>
+        .chat-logo {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #de8cb5;
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 9999;
+        }
+
+        .chat-window {
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 9999;
+        }
+
+        .chat-header {
+            background-color: #241c1c;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .chat-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #c3e3f3;
+        }
+
+        .chat-footer {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-footer input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            font-size: 14px;
+            border: none;
+            background-color: #ffffff;
+        }
+
+        .chat-footer button {
+            background-color: #de8cb5;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .chat-footer button:hover {
+            background-color: #c076a3;
+        }
+
+        .minimize-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Smiley Face Button -->
+    <div class="chat-logo" onclick="toggleChatWindow()">😊</div>
+
+    <!-- Chat Window -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            Chatbot
+            <button class="minimize-btn" onclick="minimizeChat()">-</button>
+        </div>
+        <div class="chat-body" id="chatBody">
+            <div class="message assistant-message">Hi! How can I help you today?</div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="userInput" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
     </div>
-    <div class="chat-body" id="chatBody">
-        <div class="message assistant-message">Hi! How can I help you today?</div>
-    </div>
-    <div class="chat-footer">
-        <input type="text" id="userInput" placeholder="Type your message...">
-        <button onclick="sendMessage()">Send</button>
-    </div>
-</div>
 
-<script>
-    function toggleChatWindow() {
-        const chatWindow = document.getElementById('chatWindow');
-        chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
-    }
+    <script>
+        function toggleChatWindow() {
+            const chatWindow = document.getElementById('chatWindow');
+            console.log("Toggling chat window display");
+            chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
+        }
 
-    function minimizeChat() {
-        const chatWindow = document.getElementById('chatWindow');
-        chatWindow.style.display = 'none';
-    }
+        function minimizeChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.style.display = 'none';
+        }
 
-    function sendMessage() {
-        const chatBody = document.getElementById('chatBody');
-        const userInput = document.getElementById('userInput');
-        const userMessage = userInput.value.trim();
-        if (userMessage) {
-            // Display user's message
-            const userMessageElement = document.createElement('div');
-            userMessageElement.classList.add('message', 'user-message');
-            userMessageElement.textContent = userMessage;
-            chatBody.appendChild(userMessageElement);
-
-            // Auto-scroll to the latest message
-            chatBody.scrollTop = chatBody.scrollHeight;
-
-            // Clear the input field
-            userInput.value = '';
-
-            // Simulate assistant response
-            setTimeout(() => {
-                const assistantMessageElement = document.createElement('div');
-                assistantMessageElement.classList.add('message', 'assistant-message');
-                assistantMessageElement.textContent = "I'm here to help!";
-                chatBody.appendChild(assistantMessageElement);
+        function sendMessage() {
+            const chatBody = document.getElementById('chatBody');
+            const userInput = document.getElementById('userInput');
+            const userMessage = userInput.value.trim();
+            if (userMessage) {
+                // Display user's message
+                const userMessageElement = document.createElement('div');
+                userMessageElement.classList.add('message', 'user-message');
+                userMessageElement.textContent = userMessage;
+                chatBody.appendChild(userMessageElement);
 
                 // Auto-scroll to the latest message
                 chatBody.scrollTop = chatBody.scrollHeight;
-            }, 1000);
+
+                // Clear the input field
+                userInput.value = '';
+
+                // Simulate assistant response
+                setTimeout(() => {
+                    const assistantMessageElement = document.createElement('div');
+                    assistantMessageElement.classList.add('message', 'assistant-message');
+                    assistantMessageElement.textContent = "I'm here to help!";
+                    chatBody.appendChild(assistantMessageElement);
+
+                    // Auto-scroll to the latest message
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }, 1000);
+            }
         }
-    }
-</script>
+    </script>
+
+</body>
+</html>
