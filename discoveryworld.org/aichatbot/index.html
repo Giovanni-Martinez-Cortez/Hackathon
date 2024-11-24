@@ -10,10 +10,33 @@
             margin: 0;
             padding: 0;
         }
+        /* Floating Logo Button */
+        .chat-logo {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #241c1c;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+        }
+        .chat-logo img {
+            width: 80%;
+            height: 80%;
+        }
+
+        /* Chat Window */
         .chat-window {
             position: fixed;
-            bottom: 10px;
-            right: 10px;
+            bottom: 80px;
+            right: 20px;
             width: 90%;
             max-width: 350px;
             height: 60vh;
@@ -21,11 +44,11 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             border-radius: 8px;
             background-color: #ffffff;
-            display: flex;
+            display: none;
             flex-direction: column;
             overflow: hidden;
             border: 1px solid #ddd;
-            z-index: 9999; /* Ensures visibility on top of all content */
+            z-index: 9999;
         }
         .chat-header {
             background-color: #241c1c;
@@ -34,6 +57,9 @@
             text-align: center;
             font-size: 16px;
             font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .chat-body {
             flex: 1;
@@ -78,13 +104,23 @@
             background-color: #c076a3;
         }
 
+        /* Minimize Button */
+        .minimize-btn {
+            font-size: 20px;
+            cursor: pointer;
+            color: #fff;
+            background-color: transparent;
+            border: none;
+            padding: 5px;
+        }
+
         @media screen and (max-width: 480px) {
             .chat-window {
-                bottom: 5px;
+                bottom: 80px;
                 right: 5px;
                 width: 95%;
-                height: 70vh; /* Adjust for mobile devices */
-                max-height: 100%; /* No unnecessary limits on small screens */
+                height: 70vh;
+                max-height: 100%;
             }
             .chat-header {
                 font-size: 14px;
@@ -102,9 +138,17 @@
     </style>
 </head>
 <body>
-    <div class="chat-window">
+
+    <!-- Floating Chat Logo -->
+    <div class="chat-logo" onclick="toggleChatWindow()">
+        <img src="https://via.placeholder.com/40" alt="Chat Logo"> <!-- Replace with your logo -->
+    </div>
+
+    <!-- Chat Window -->
+    <div class="chat-window" id="chatWindow">
         <div class="chat-header">
-            Echo
+            <span>Echo</span>
+            <button class="minimize-btn" onclick="minimizeChat()">-</button>
         </div>
         <div class="chat-body" id="chatBody">
             <div class="message assistant-message">Hi! How can I help you today?</div>
@@ -116,6 +160,20 @@
     </div>
 
     <script>
+        function toggleChatWindow() {
+            const chatWindow = document.getElementById('chatWindow');
+            if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+                chatWindow.style.display = 'flex'; // Show the chat window
+            } else {
+                chatWindow.style.display = 'none'; // Hide the chat window
+            }
+        }
+
+        function minimizeChat() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.style.display = 'none'; // Hide the chat window when minimize button is clicked
+        }
+
         function sendMessage() {
             const chatBody = document.getElementById('chatBody');
             const userInput = document.getElementById('userInput');
