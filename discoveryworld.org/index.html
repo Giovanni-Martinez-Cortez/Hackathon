@@ -2066,7 +2066,7 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 						</li>
 					</ul>
 									</div>
-								<!-- Chatbot container -->
+<!-- Chatbot container -->
 <div id="chatbot-container"></div>
 
 <script>
@@ -2078,8 +2078,6 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
         })
         .catch(error => console.error('Error loading the chatbot:', error));
 </script>
-
-</nav>
 
 <!-- Smiley Face Button -->
 <div class="chat-logo" onclick="toggleChatWindow()">😊</div>
@@ -2103,13 +2101,23 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
     // Function to toggle the visibility of the chat window
     function toggleChatWindow() {
         const chatWindow = document.getElementById('chatWindow');
+        const chatLogo = document.querySelector('.chat-logo');
+
         console.log("Toggling chat window display, current display:", chatWindow.style.display);
 
         // Toggle between showing and hiding the chat window
         if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
             chatWindow.style.display = 'flex';
+            chatLogo.style.display = 'none'; // Hide the smiley when chat is open
+
+            // Adjust the chat window size on narrow screens
+            if (window.innerWidth < 600) {
+                chatWindow.style.width = '100%';
+                chatWindow.style.height = '100%'; // Fullscreen mode for narrow screens
+            }
         } else {
             chatWindow.style.display = 'none';
+            chatLogo.style.display = 'block'; // Show the smiley when chat is closed
         }
     }
 
@@ -2117,6 +2125,7 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
     function minimizeChat() {
         const chatWindow = document.getElementById('chatWindow');
         chatWindow.style.display = 'none';
+        document.querySelector('.chat-logo').style.display = 'block'; // Show the smiley when minimized
     }
 
     // Function to send the user's message to the backend
@@ -2204,6 +2213,7 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
         line-height: 50px;
         cursor: pointer;
         z-index: 10000; /* Ensure the smiley face button is above everything */
+        transition: all 0.3s ease; /* Smooth transition for movement */
     }
 
     .chat-header {
@@ -2270,12 +2280,28 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
         color: white;
     }
 
-    /* Additional media query for small screens */
+    /* Media query for small screens */
     @media (max-width: 600px) {
         .chat-window {
-            width: 100%; /* Take full width on small screens */
-            height: 80%; /* Adjust height on small screens */
+            width: 100%; /* Full width on small screens */
+            height: 100%; /* Full height for small screens */
             max-width: none; /* Remove max-width for small screens */
+        }
+
+        /* Moving the emoji to the bottom-left on small screens */
+        .chat-logo {
+            bottom: 20px;
+            left: 20px; /* Adjust to the left side on small screens */
+            right: initial; /* Reset the right position */
+        }
+    }
+
+    /* Media query for very small screens */
+    @media (max-width: 400px) {
+        .chat-logo {
+            width: 45px; /* Make the emoji button smaller on very small screens */
+            height: 45px;
+            font-size: 20px; /* Smaller text */
         }
     }
 </style>
