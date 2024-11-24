@@ -2066,81 +2066,95 @@ var elementorFrontendConfig = {"environmentMode":{"edit":false,"wpPreview":false
 						</li>
 					</ul>
 									</div>
-			</div><!-- Chatbot container -->
-			<div id="chatbot-container"></div>
-			
-			<script>
-				// Load the chatbot into the 'chatbot-container' div
-				fetch('./aichatbot/index.html')
-					.then(response => response.text())
-					.then(data => {
-						document.getElementById('chatbot-container').innerHTML = data;
-					})
-					.catch(error => console.error('Error loading the chatbot:', error));
-			</script>
-			
-		</nav>
-
-		<!-- Smiley Face Button -->
-		<div class="chat-logo" onclick="toggleChatWindow()">😊</div>
-		
-		<!-- Chat Window -->
-		<div class="chat-window" id="chatWindow">
-			<div class="chat-header">
-				Chatbot
-				<button class="minimize-btn" onclick="minimizeChat()">-</button>
-			</div>
-			<div class="chat-body" id="chatBody">
-				<div class="message assistant-message">Hi! How can I help you today?</div>
-			</div>
-			<div class="chat-footer">
-				<input type="text" id="userInput" placeholder="Type your message...">
-				<button onclick="sendMessage()">Send</button>
-			</div>
-		</div>
-		
-		<script>
-			function toggleChatWindow() {
-				const chatWindow = document.getElementById('chatWindow');
-				chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
-			}
-		
-			function minimizeChat() {
-				const chatWindow = document.getElementById('chatWindow');
-				chatWindow.style.display = 'none';
-			}
-		
-			function sendMessage() {
-				const chatBody = document.getElementById('chatBody');
-				const userInput = document.getElementById('userInput');
-				const userMessage = userInput.value.trim();
-				if (userMessage) {
-					// Display user's message
-					const userMessageElement = document.createElement('div');
-					userMessageElement.classList.add('message', 'user-message');
-					userMessageElement.textContent = userMessage;
-					chatBody.appendChild(userMessageElement);
-		
-					// Auto-scroll to the latest message
-					chatBody.scrollTop = chatBody.scrollHeight;
-		
-					// Clear the input field
-					userInput.value = '';
-		
-					// Simulate assistant response
-					setTimeout(() => {
-						const assistantMessageElement = document.createElement('div');
-						assistantMessageElement.classList.add('message', 'assistant-message');
-						assistantMessageElement.textContent = "I'm here to help!";
-						chatBody.appendChild(assistantMessageElement);
-		
-						// Auto-scroll to the latest message
-						chatBody.scrollTop = chatBody.scrollHeight;
-					}, 1000);
-				}
-			}
-		</script>
-		
-		</body>
-		</html>
-		
+								</div><!-- Chatbot container -->
+								<div id="chatbot-container"></div>
+								
+								<script>
+									// Load the chatbot into the 'chatbot-container' div
+									fetch('./aichatbot/index.html')
+										.then(response => response.text())
+										.then(data => {
+											document.getElementById('chatbot-container').innerHTML = data;
+										})
+										.catch(error => console.error('Error loading the chatbot:', error));
+								</script>
+								
+								</nav>
+								
+								<!-- Smiley Face Button -->
+								<div class="chat-logo" onclick="toggleChatWindow()">😊</div>
+								
+								<!-- Chat Window -->
+								<div class="chat-window" id="chatWindow">
+									<div class="chat-header">
+										Chatbot
+										<button class="minimize-btn" onclick="minimizeChat()">-</button>
+									</div>
+									<div class="chat-body" id="chatBody">
+										<div class="message assistant-message">Hi! How can I help you today?</div>
+									</div>
+									<div class="chat-footer">
+										<input type="text" id="userInput" placeholder="Type your message...">
+										<button onclick="sendMessage()">Send</button>
+									</div>
+								</div>
+								
+								<script>
+									function toggleChatWindow() {
+										const chatWindow = document.getElementById('chatWindow');
+										console.log("Toggling chat window display");
+										chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
+									}
+								
+									function minimizeChat() {
+										const chatWindow = document.getElementById('chatWindow');
+										chatWindow.style.display = 'none';
+									}
+								
+									function sendMessage() {
+										const chatBody = document.getElementById('chatBody');
+										const userInput = document.getElementById('userInput');
+										const userMessage = userInput.value.trim();
+										
+										if (userMessage) {
+											// Display user's message
+											const userMessageElement = document.createElement('div');
+											userMessageElement.classList.add('message', 'user-message');
+											userMessageElement.textContent = userMessage;
+											chatBody.appendChild(userMessageElement);
+								
+											// Auto-scroll to the latest message
+											chatBody.scrollTop = chatBody.scrollHeight;
+								
+											// Clear the input field
+											userInput.value = '';
+								
+											// Send the user's message to the backend via a POST request
+											fetch('http://localhost:5000/processprompt', {  // Use the correct backend URL
+												method: 'POST',
+												headers: {
+													'Content-Type': 'application/json',
+												},
+												body: JSON.stringify({ prompt: userMessage })  // Send the user's message as a JSON object
+											})
+											.then(response => response.json())
+											.then(data => {
+												// Ensure the response contains the correct text
+												const assistantMessageText = data.text || "Sorry, I couldn't process your request.";
+												
+												// Display the assistant's response
+												const assistantMessageElement = document.createElement('div');
+												assistantMessageElement.classList.add('message', 'assistant-message');
+												assistantMessageElement.textContent = assistantMessageText;  // Display the actual response text
+												chatBody.appendChild(assistantMessageElement);
+								
+												// Auto-scroll to the latest message
+												chatBody.scrollTop = chatBody.scrollHeight;
+											})
+											.catch(error => {
+												console.error('Error with backend request:', error);
+											});
+										}
+									}
+								</script>
+								
