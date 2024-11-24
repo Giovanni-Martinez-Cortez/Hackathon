@@ -171,26 +171,26 @@
             const userInput = document.getElementById('userInput');
             const userMessage = userInput.value.trim();
             if (userMessage) {
-                // Display user's message
+               
                 const userMessageElement = document.createElement('div');
                 userMessageElement.classList.add('message', 'user-message');
                 userMessageElement.textContent = userMessage;
                 chatBody.appendChild(userMessageElement);
 
-                // Auto-scroll to the latest message
+                
                 chatBody.scrollTop = chatBody.scrollHeight;
 
-                // Clear the input field
+                
                 userInput.value = '';
 
-                // Simulate assistant response
+                
                 setTimeout(() => {
                     const assistantMessageElement = document.createElement('div');
                     assistantMessageElement.classList.add('message', 'assistant-message');
                     assistantMessageElement.textContent = "I'm here to help!";
                     chatBody.appendChild(assistantMessageElement);
 
-                    // Auto-scroll to the latest message
+                   
                     chatBody.scrollTop = chatBody.scrollHeight;
                 }, 1000);
             }
